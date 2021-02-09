@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>报修</title>
+</head>
+<body>
+<center>
+    <h1>设备维修记录</h1>
+
+    <h1>设备维修报告</h1>
+    <form th:action="@{/equip_fault_report/add}" method="post">
+        <input type="text" name="equip_id" placeholder="设备id"><br>
+        <input type="text" name="equip_no" placeholder="设备编号"><br>
+        <input type="text" name="equip_type" placeholder="设备类型"><br>
+        <input type="text" name="equip_loc" placeholder="所处产线"><br>
+        <input type="text" name="fault_desc" placeholder="故障描述"><br>
+        <input type="text" name="status" placeholder="状态"><br>
+        <input type="text" name="report_person" placeholder="上报人姓名"><br>
+        <input type="text" name="assign_time" placeholder="指派时间"><br>
+        <input type="text" name="maintenance_worker" placeholder="维修工人"><br>
+<!--        <input type="text" name="del_flag" placeholder="删除标记"><br>-->
+        <input type="text" name="remarks" placeholder="备注"><br>
+        <input type="text" name="create_by" placeholder="创建人"><br>
+        <input type="text" name="update_by" placeholder="更新人"><br>
+
+        <button type="submit">添&emsp;加</button>
+    </form>
+
+</center>
+
+</body>
+</html>

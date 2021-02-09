@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.production_mes.dao.SysOfficeDao">
+
+    <resultMap type="com.example.production_mes.entity.SysOffice" id="SysOfficeMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="parentId" column="parent_id" jdbcType="VARCHAR"/>
+        <result property="parentIds" column="parent_ids" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="sort" column="sort" jdbcType="NUMERIC"/>
+        <result property="areaId" column="area_id" jdbcType="VARCHAR"/>
+        <result property="code" column="code" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="grade" column="grade" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="zipCode" column="zip_code" jdbcType="VARCHAR"/>
+        <result property="master" column="master" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="fax" column="fax" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="useable" column="USEABLE" jdbcType="VARCHAR"/>
+        <result property="primaryPerson" column="PRIMARY_PERSON" jdbcType="VARCHAR"/>
+        <result property="deputyPerson" column="DEPUTY_PERSON" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SysOfficeMap">
+        select
+          id, parent_id, parent_ids, name, sort, area_id, code, type, grade, address, zip_code, master, phone, fax, email, USEABLE, PRIMARY_PERSON, DEPUTY_PERSON, create_by, create_date, update_by, update_date, remarks, del_flag
+        from production_mes2.sys_office
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SysOfficeMap">
+        select
+          id, parent_id, parent_ids, name, sort, area_id, code, type, grade, address, zip_code, master, phone, fax, email, USEABLE, PRIMARY_PERSON, DEPUTY_PERSON, create_by, create_date, update_by, update_date, remarks, del_flag
+        from production_mes2.sys_office
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SysOfficeMap">
+        select
+        id, parent_id, parent_ids, name, sort, area_id, code, type, grade, address, zip_code, master, phone, fax, email,
+        USEABLE, PRIMARY_PERSON, DEPUTY_PERSON, create_by, create_date, update_by, update_date, remarks, del_flag
+        from production_mes2.sys_office
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="parentId != null and parentId != ''">
+                and parent_id = #{parentId}
+            </if>
+            <if test="parentIds != null and parentIds != ''">
+                and parent_ids = #{parentIds}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="sort != null">
+                and sort = #{sort}
+            </if>
+            <if test="areaId != null and areaId != ''">
+                and area_id = #{areaId}
+            </if>
+            <if test="code != null and code != ''">
+                and code = #{code}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="grade != null and grade != ''">
+                and grade = #{grade}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="zipCode != null and zipCode != ''">
+                and zip_code = #{zipCode}
+            </if>
+            <if test="master != null and master != ''">
+                and master = #{master}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="fax != null and fax != ''">
+                and fax = #{fax}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="useable != null and useable != ''">
+                and USEABLE = #{useable}
+            </if>
+            <if test="primaryPerson != null and primaryPerson != ''">
+                and PRIMARY_PERSON = #{primaryPerson}
+            </if>
+            <if test="deputyPerson != null and deputyPerson != ''">
+                and DEPUTY_PERSON = #{deputyPerson}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and remarks = #{remarks}
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                and del_flag = #{delFlag}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into production_mes2.sys_office(parent_id, parent_ids, name, sort, area_id, code, type, grade, address, zip_code, master, phone, fax, email, USEABLE, PRIMARY_PERSON, DEPUTY_PERSON, create_by, create_date, update_by, update_date, remarks, del_flag)
+        values (#{parentId}, #{parentIds}, #{name}, #{sort}, #{areaId}, #{code}, #{type}, #{grade}, #{address}, #{zipCode}, #{master}, #{phone}, #{fax}, #{email}, #{useable}, #{primaryPerson}, #{deputyPerson}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate}, #{remarks}, #{delFlag})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update production_mes2.sys_office
+        <set>
+            <if test="parentId != null and parentId != ''">
+                parent_id = #{parentId},
+            </if>
+            <if test="parentIds != null and parentIds != ''">
+                parent_ids = #{parentIds},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            <if test="areaId != null and areaId != ''">
+                area_id = #{areaId},
+            </if>
+            <if test="code != null and code != ''">
+                code = #{code},
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type},
+            </if>
+            <if test="grade != null and grade != ''">
+                grade = #{grade},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="zipCode != null and zipCode != ''">
+                zip_code = #{zipCode},
+            </if>
+            <if test="master != null and master != ''">
+                master = #{master},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="fax != null and fax != ''">
+                fax = #{fax},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="useable != null and useable != ''">
+                USEABLE = #{useable},
+            </if>
+            <if test="primaryPerson != null and primaryPerson != ''">
+                PRIMARY_PERSON = #{primaryPerson},
+            </if>
+            <if test="deputyPerson != null and deputyPerson != ''">
+                DEPUTY_PERSON = #{deputyPerson},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks},
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                del_flag = #{delFlag},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from production_mes2.sys_office where id = #{id}
+    </delete>
+
+</mapper>

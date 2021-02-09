@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.production_mes.dao.EquipRepairDao">
+
+    <resultMap type="com.example.production_mes.entity.EquipRepair" id="EquipRepairMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="mid" column="mid" jdbcType="VARCHAR"/>
+        <result property="faultType" column="fault_type" jdbcType="VARCHAR"/>
+        <result property="faultReason" column="fault_reason" jdbcType="VARCHAR"/>
+        <result property="faultDesc" column="fault_desc" jdbcType="VARCHAR"/>
+        <result property="faultImgs" column="fault_imgs" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="EquipRepairMap">
+        select
+          id, mid, fault_type, fault_reason, fault_desc, fault_imgs, create_by, create_date, update_by, update_date, remarks, del_flag
+        from production_mes2.equip_repair
+        where id = #{id}
+    </select>
+    <!--通过Mid查询单个-->
+    <select id="selectByMid" resultMap="EquipRepairMap">
+        select
+          id, mid, fault_type, fault_reason, fault_desc, fault_imgs, create_by, create_date, update_by, update_date, remarks, del_flag
+        from production_mes2.equip_repair
+        where mid = #{mid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="EquipRepairMap">
+        select
+          id, mid, fault_type, fault_reason, fault_desc, fault_imgs, create_by, create_date, update_by, update_date, remarks, del_flag
+        from production_mes2.equip_repair
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="EquipRepairMap">
+        select
+        id, mid, fault_type, fault_reason, fault_desc, fault_imgs, create_by, create_date, update_by, update_date,
+        remarks, del_flag
+        from production_mes2.equip_repair
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="mid != null and mid != ''">
+                and mid = #{mid}
+            </if>
+            <if test="faultType != null and faultType != ''">
+                and fault_type = #{faultType}
+            </if>
+            <if test="faultReason != null and faultReason != ''">
+                and fault_reason = #{faultReason}
+            </if>
+            <if test="faultDesc != null and faultDesc != ''">
+                and fault_desc = #{faultDesc}
+            </if>
+            <if test="faultImgs != null and faultImgs != ''">
+                and fault_imgs = #{faultImgs}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and remarks = #{remarks}
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                and del_flag = #{delFlag}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into production_mes2.equip_repair(id,mid, fault_type, fault_reason, fault_desc, fault_imgs, create_by, create_date, update_by, update_date, remarks, del_flag)
+        values (#{id},#{mid}, #{faultType}, #{faultReason}, #{faultDesc}, #{faultImgs}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate}, #{remarks}, #{delFlag})
+    </insert>
+
+
+    <!--更改维修状态-->
+    <update id="updateStatus">
+        update production_mes2.equip_fault_report
+        set status = '0003'
+        where id = #{mid}
+    </update>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update production_mes2.equip_repair
+        <set>
+            <if test="mid != null and mid != ''">
+                mid = #{mid},
+            </if>
+            <if test="faultType != null and faultType != ''">
+                fault_type = #{faultType},
+            </if>
+            <if test="faultReason != null and faultReason != ''">
+                fault_reason = #{faultReason},
+            </if>
+            <if test="faultDesc != null and faultDesc != ''">
+                fault_desc = #{faultDesc},
+            </if>
+            <if test="faultImgs != null and faultImgs != ''">
+                fault_imgs = #{faultImgs},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks},
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                del_flag = #{delFlag},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from production_mes2.equip_repair where id = #{id}
+    </delete>
+
+</mapper>

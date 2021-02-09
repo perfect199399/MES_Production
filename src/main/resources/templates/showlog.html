@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>系统日志</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" th:href="@{/static/css/showlog.css}">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <!-- 开发环境版本VUE，包含了有帮助的命令行警告 -->
+    <script th:src="@{/js/vue.js}"></script>
+    <!-- 引入组件库 -->
+    <script th:src="@{/js/index.js}"></script>
+
+</head>
+
+<body th:background="@{/img/1.jpg}">
+<center>
+    <div id="app">
+        <h1>系统日志：{{ message }}</h1>
+        <!--    <template>-->
+        <el-table :data="tableData" border style="width: 95%;background-color: transparent;" fit>
+
+            <el-table-column prop="name" label="姓名" width="120" align="center">
+            </el-table-column>
+            <el-table-column prop="province" label="省份" width="120" align="center">
+            </el-table-column>
+            <el-table-column prop="city" label="市区" width="120" align="center">
+            </el-table-column>
+            <el-table-column prop="address" label="地址" width="300" align="center">
+            </el-table-column>
+            <el-table-column prop="zip" label="邮编" width="120" align="center">
+            </el-table-column>
+            <el-table-column prop="tel" label="电话" width="180" align="center">
+            </el-table-column>
+            <el-table-column id="qq" prop="qq" label="QQ" width="180" align="center">
+            </el-table-column>
+            <el-table-column prop="eml" label="电子邮件" width="220" align="center">
+            </el-table-column>
+            <el-table-column label="访问链接" width="350" show-overflow-tooltip align="center">
+                <template slot-scope="scope">
+                    <a :href="scope.row.aurl" target="_blank" class="buttonText">发邮件</a>
+                    <a :href="scope.row.burl" target="_blank" class="buttonText">QQ联系</a>
+                    <a :href="scope.row.curl" target="_blank" class="buttonText">地理位置</a>
+                </template>
+            </el-table-column>
+        </el-table>
+    </div>
+
+    <script type="text/javascript">
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue!',
+                tableData: [{
+                    name: '张三',
+                    province: '陕西',
+                    city: '西安',
+                    qq: '536478654',
+                    tel: '14565899658',
+                    eml: '4498494@qq.com',
+                    address: '西安科技大学',
+                    aurl: 'mailto:zengxiaochao666@163.com?subject=Hello&body=好久不见',
+                    burl: 'http://wpa.qq.com/msgrd?v=3&uin=3211614231&site=qq&menu=yes',
+                    curl: 'https://uri.amap.com/marker?position=108.857498,34.366390&name=西安',
+                    zip: 888888
+                }, {
+                    name: '李四',
+                    province: '陕西',
+                    city: '西安',
+                    qq: '536478654',
+                    tel: '1245635665',
+                    eml: '5665655@qq.com',
+                    address: '西安工程大学',
+                    aurl: 'mailto:zengxiaochao666@163.com?subject=Hello&body=好久不见',
+                    burl: 'http://wpa.qq.com/msgrd?v=3&uin=3211614231&site=qq&menu=yes',
+                    curl: 'https://uri.amap.com/marker?position=108.857498,34.366390&name=西安',
+                    zip: 888888
+                }]
+            }
+        });
+    </script>
+</center>
+</body>
+
+</html>

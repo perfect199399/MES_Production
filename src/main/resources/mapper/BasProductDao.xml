@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.production_mes.dao.BasProductDao">
+
+    <resultMap type="com.example.production_mes.entity.BasProduct" id="BasProductMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="productname" column="productName" jdbcType="VARCHAR"/>
+        <result property="productabbr" column="productAbbr" jdbcType="VARCHAR"/>
+        <result property="productdesc" column="productDesc" jdbcType="VARCHAR"/>
+        <result property="firstcheck" column="firstCheck" jdbcType="VARCHAR"/>
+        <result property="qrcode" column="qrCode" jdbcType="VARCHAR"/>
+        <result property="manageway" column="manageWay" jdbcType="VARCHAR"/>
+        <result property="lotnumber" column="lotNumber" jdbcType="VARCHAR"/>
+        <result property="state" column="state" jdbcType="VARCHAR"/>
+        <result property="productunit" column="productUnit" jdbcType="VARCHAR"/>
+        <result property="productprop" column="productProp" jdbcType="VARCHAR"/>
+        <result property="flowId" column="flow_id" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BasProductMap">
+        select
+          id, productName, productAbbr, productDesc, firstCheck, qrCode, manageWay, lotNumber, state, productUnit, productProp, flow_id, create_by, create_date, update_by, update_date, remarks, del_flag
+        from production_mes2.bas_product
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BasProductMap">
+        select
+          id, productName, productAbbr, productDesc, firstCheck, qrCode, manageWay, lotNumber, state, productUnit, productProp, flow_id, create_by, create_date, update_by, update_date, remarks, del_flag
+        from production_mes2.bas_product
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BasProductMap">
+        select
+        id, productName, productAbbr, productDesc, firstCheck, qrCode, manageWay, lotNumber, state, productUnit,
+        productProp, flow_id, create_by, create_date, update_by, update_date, remarks, del_flag
+        from production_mes2.bas_product
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="productname != null and productname != ''">
+                and productName = #{productname}
+            </if>
+            <if test="productabbr != null and productabbr != ''">
+                and productAbbr = #{productabbr}
+            </if>
+            <if test="productdesc != null and productdesc != ''">
+                and productDesc = #{productdesc}
+            </if>
+            <if test="firstcheck != null and firstcheck != ''">
+                and firstCheck = #{firstcheck}
+            </if>
+            <if test="qrcode != null and qrcode != ''">
+                and qrCode = #{qrcode}
+            </if>
+            <if test="manageway != null and manageway != ''">
+                and manageWay = #{manageway}
+            </if>
+            <if test="lotnumber != null and lotnumber != ''">
+                and lotNumber = #{lotnumber}
+            </if>
+            <if test="state != null and state != ''">
+                and state = #{state}
+            </if>
+            <if test="productunit != null and productunit != ''">
+                and productUnit = #{productunit}
+            </if>
+            <if test="productprop != null and productprop != ''">
+                and productProp = #{productprop}
+            </if>
+            <if test="flowId != null and flowId != ''">
+                and flow_id = #{flowId}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and remarks = #{remarks}
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                and del_flag = #{delFlag}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into production_mes2.bas_product(id, productName, productAbbr, productDesc, firstCheck, qrCode, manageWay, lotNumber, state, productUnit, productProp, flow_id, create_by, create_date, update_by, update_date, remarks, del_flag )
+        values (#{id} ,#{productname}, #{productabbr}, #{productdesc}, #{firstcheck}, #{qrcode}, #{manageway}, #{lotnumber}, #{state}, #{productunit}, #{productprop}, #{flowId}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate}, #{remarks}, #{delFlag})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update production_mes2.bas_product
+        <set>
+            <if test="productname != null and productname != ''">
+                productName = #{productname},
+            </if>
+            <if test="productabbr != null and productabbr != ''">
+                productAbbr = #{productabbr},
+            </if>
+            <if test="productdesc != null and productdesc != ''">
+                productDesc = #{productdesc},
+            </if>
+            <if test="firstcheck != null and firstcheck != ''">
+                firstCheck = #{firstcheck},
+            </if>
+            <if test="qrcode != null and qrcode != ''">
+                qrCode = #{qrcode},
+            </if>
+            <if test="manageway != null and manageway != ''">
+                manageWay = #{manageway},
+            </if>
+            <if test="lotnumber != null and lotnumber != ''">
+                lotNumber = #{lotnumber},
+            </if>
+            <if test="state != null and state != ''">
+                state = #{state},
+            </if>
+            <if test="productunit != null and productunit != ''">
+                productUnit = #{productunit},
+            </if>
+            <if test="productprop != null and productprop != ''">
+                productProp = #{productprop},
+            </if>
+            <if test="flowId != null and flowId != ''">
+                flow_id = #{flowId},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks},
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                del_flag = #{delFlag},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from production_mes2.bas_product where id = #{id}
+    </delete>
+
+    <select id="query_qrcode" resultMap="BasProductMap">
+        select
+          id, productName, productAbbr, productDesc, firstCheck, qrCode, manageWay, lotNumber, state, productUnit, productProp, flow_id, create_by, create_date, update_by, update_date, remarks, del_flag
+        from production_mes2.bas_product
+        where qrCode = #{qrcode]}
+    </select>
+
+
+    <select id="query_name" resultMap="BasProductMap">
+        select
+          id, productName, productAbbr, productDesc, firstCheck, qrCode, manageWay, lotNumber, state, productUnit, productProp, flow_id, create_by, create_date, update_by, update_date, remarks, del_flag
+        from production_mes2.bas_product
+        where productName = #{name]}
+    </select>
+
+</mapper>

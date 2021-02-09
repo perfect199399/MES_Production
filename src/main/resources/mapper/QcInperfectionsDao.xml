@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.production_mes.dao.QcInperfectionsDao">
+
+    <resultMap type="com.example.production_mes.entity.QcInperfections" id="QcInperfectionsMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="pn" column="pn" jdbcType="VARCHAR"/>
+        <result property="bn" column="bn" jdbcType="VARCHAR"/>
+        <result property="woId" column="wo_id" jdbcType="VARCHAR"/>
+        <result property="desc" column="desc" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+        <result property="pname" column="productName" jdbcType="VARCHAR"/>
+        <result property="woCode" column="orderCode" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="QcInperfectionsMap">
+        select
+          id, pn, bn, wo_id, desc, create_by, create_date, update_by, update_date, del_flag, remarks
+        from production_mes2.qc_inperfections
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="QcInperfectionsMap">
+        select
+          qi.*,p.productName,w.orderCode
+        from production_mes2.qc_inperfections qi,
+        production_mes2.bas_product p,
+        production_mes2.bas_workorder w
+        where qi.pn = p.id
+        and qi.wo_id = w.id
+        and qi.del_flag = '1'
+        limit #{offset}, #{limit}
+    </select>
+    <!--查询指定行数据-->
+    <select id="queryByName" resultMap="QcInperfectionsMap">
+        select
+          qi.*,p.productName,w.orderCode
+        from production_mes2.qc_inperfections qi,
+        production_mes2.bas_product p,
+        production_mes2.bas_workorder w
+        where qi.pn = p.id
+        and qi.wo_id = w.id
+        and qi.del_flag = '1'
+        and p.productName like "%"#{pname}"%"
+        limit #{offset}, #{limit}
+    </select>
+
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="QcInperfectionsMap">
+        select
+        id, pn, bn, wo_id, desc, create_by, create_date, update_by, update_date, del_flag, remarks
+        from production_mes2.qc_inperfections
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="pn != null and pn != ''">
+                and pn = #{pn}
+            </if>
+            <if test="bn != null and bn != ''">
+                and bn = #{bn}
+            </if>
+            <if test="woId != null and woId != ''">
+                and wo_id = #{woId}
+            </if>
+            <if test="desc != null and desc != ''">
+                and desc = #{desc}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                and del_flag = #{delFlag}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and remarks = #{remarks}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into production_mes2.qc_inperfections(pn, bn, wo_id, desc, create_by, create_date, update_by, update_date, del_flag, remarks)
+        values (#{pn}, #{bn}, #{woId}, #{desc}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate}, #{delFlag}, #{remarks})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update production_mes2.qc_inperfections
+        <set>
+            <if test="pn != null and pn != ''">
+                pn = #{pn},
+            </if>
+            <if test="bn != null and bn != ''">
+                bn = #{bn},
+            </if>
+            <if test="woId != null and woId != ''">
+                wo_id = #{woId},
+            </if>
+            <if test="desc != null and desc != ''">
+                desc = #{desc},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                del_flag = #{delFlag},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from production_mes2.qc_inperfections where id = #{id}
+    </delete>
+
+    <!--通过主键修改-->
+    <update id="updateById">
+        update production_mes2.qc_inperfections
+        <set>
+            <if test="id != null and id != ''">
+                del_flag = '0',
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

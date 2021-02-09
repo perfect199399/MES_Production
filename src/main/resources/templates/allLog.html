@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>查看日志文件</title>
+    <link rel="stylesheet" th:href="@{/css/alllog.css}">
+</head>
+<body>
+    <div style="float: left;width: 100%;height: 20px;background-color:azure;">
+        <!--上边栏空白占位  -->
+    </div>
+    <div style="float: left;width: 5%;height: 1000px;background-color: aqua;">
+        <!--左边栏空白占位  -->
+    </div>
+    <div style="float: left;width: 90%;height: 1000px;">
+        <table>
+            <tr>
+                <th colspan="7" style="text-align: center;">系统日志</th>
+            </tr>
+
+            <tr>
+                <td><h3>id</h3></td>
+                <td><h3>type</h3></td>
+                <td><h3>title</h3></td>
+                <td><h3>request_uri</h3></td>
+                <td><h3>create_by</h3></td>
+                <td><h3>create_date</h3></td>
+                <td><h3>remote_addr</h3></td>
+            </tr>
+
+            <tr th:each="log1:${alllog}">
+                <td th:text="${log1.id}"></td>
+                <td th:text="${log1.type}"></td>
+                <td th:text="${log1.title}"></td>
+                <td th:text="${log1.request_uri}"></td>
+                <td th:text="${log1.create_by}"></td>
+                <td th:text="${log1.create_date}"></td>
+                <td th:text="${log1.remote_addr}"></td>
+            </tr>
+
+        </table>
+    </div>
+    <div style="float: left;width: 5%;height: 1000px;background-color: aqua;">
+        <!--右边栏空白占位  -->
+    </div>
+
+</body>
+</html>

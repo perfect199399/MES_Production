@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.production_mes.dao.BasBomDetailDao">
+
+    <resultMap type="com.example.production_mes.entity.BasBomDetail" id="BasBomDetailMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="bomId" column="bom_id" jdbcType="VARCHAR"/>
+        <result property="mtype" column="mType" jdbcType="VARCHAR"/>
+        <result property="mnum" column="mNum" jdbcType="INTEGER"/>
+        <result property="unit" column="unit" jdbcType="VARCHAR"/>
+        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BasBomDetailMap">
+        select
+          id, bom_id, mType, mNum, unit, del_flag, remarks, create_by, create_date, update_by, update_date
+        from production_mes2.bas_bom_detail
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BasBomDetailMap">
+        select
+          id, bom_id, mType, mNum, unit, del_flag, remarks, create_by, create_date, update_by, update_date
+        from production_mes2.bas_bom_detail
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BasBomDetailMap">
+        select
+        id, bom_id, mType, mNum, unit, del_flag, remarks, create_by, create_date, update_by, update_date
+        from production_mes2.bas_bom_detail
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="bomId != null and bomId != ''">
+                and bom_id = #{bomId}
+            </if>
+            <if test="mtype != null and mtype != ''">
+                and mType = #{mtype}
+            </if>
+            <if test="mnum != null">
+                and mNum = #{mnum}
+            </if>
+            <if test="unit != null and unit != ''">
+                and unit = #{unit}
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                and del_flag = #{delFlag}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and remarks = #{remarks}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into production_mes2.bas_bom_detail(bom_id, mType, mNum, unit, del_flag, remarks, create_by, create_date, update_by, update_date)
+        values (#{bomId}, #{mtype}, #{mnum}, #{unit}, #{delFlag}, #{remarks}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update production_mes2.bas_bom_detail
+        <set>
+            <if test="bomId != null and bomId != ''">
+                bom_id = #{bomId},
+            </if>
+            <if test="mtype != null and mtype != ''">
+                mType = #{mtype},
+            </if>
+            <if test="mnum != null">
+                mNum = #{mnum},
+            </if>
+            <if test="unit != null and unit != ''">
+                unit = #{unit},
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                del_flag = #{delFlag},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from production_mes2.bas_bom_detail where id = #{id}
+    </delete>
+
+</mapper>

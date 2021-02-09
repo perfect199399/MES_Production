@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.production_mes.dao.BasCodeprinterDao">
+
+    <resultMap type="com.example.production_mes.entity.BasCodeprinter" id="BasCodeprinterMap">
+        <result property="qrcode" column="qrCode" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="spec" column="spec" jdbcType="VARCHAR"/>
+        <result property="cellId" column="cell_id" jdbcType="VARCHAR"/>
+        <result property="stationId" column="station_id" jdbcType="VARCHAR"/>
+        <result property="supplier" column="supplier" jdbcType="VARCHAR"/>
+        <result property="manufacturer" column="manufacturer" jdbcType="VARCHAR"/>
+        <result property="factorynumber" column="factoryNumber" jdbcType="VARCHAR"/>
+        <result property="purpose" column="purpose" jdbcType="VARCHAR"/>
+        <result property="buydate" column="buyDate" jdbcType="OTHER"/>
+        <result property="person" column="person" jdbcType="VARCHAR"/>
+        <result property="organization" column="organization" jdbcType="VARCHAR"/>
+        <result property="ip" column="ip" jdbcType="VARCHAR"/>
+        <result property="combaudrate" column="comBaudrate" jdbcType="VARCHAR"/>
+        <result property="comdataseat" column="comDataseat" jdbcType="VARCHAR"/>
+        <result property="combegin" column="comBegin" jdbcType="VARCHAR"/>
+        <result property="comend" column="comEnd" jdbcType="VARCHAR"/>
+        <result property="checkmode" column="checkMode" jdbcType="VARCHAR"/>
+        <result property="sysparam" column="sysParam" jdbcType="VARCHAR"/>
+        <result property="cpnumber" column="cPNumber" jdbcType="VARCHAR"/>
+        <result property="mode" column="mode" jdbcType="VARCHAR"/>
+        <result property="resolution" column="resolution" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BasCodeprinterMap">
+        select
+          qrCode, type, spec, cell_id, station_id, supplier, manufacturer, factoryNumber, purpose, buyDate, person, organization, ip, comBaudrate, comDataseat, comBegin, comEnd, checkMode, sysParam, cPNumber, mode, resolution, create_by, create_date, update_by, update_date, remarks, del_flag, id
+        from production_mes2.bas_codeprinter
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BasCodeprinterMap">
+        select
+          bp.*,ws.stationName,bw.cellName
+        from production_mes2.bas_codeprinter bp,
+        production_mes2.bas_workstationinfos ws,
+        production_mes2.bas_workcell bw
+        where bp.del_flag='0'
+        and bp.station_id = ws.id
+        and bp.cell_id = bw.id
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BasCodeprinterMap">
+        select
+        qrCode, type, spec, cell_id, station_id, supplier, manufacturer, factoryNumber, purpose, buyDate, person,
+        organization, ip, comBaudrate, comDataseat, comBegin, comEnd, checkMode, sysParam, cPNumber, mode, resolution,
+        create_by, create_date, update_by, update_date, remarks, del_flag, id
+        from production_mes2.bas_codeprinter
+        <where>
+            <if test="qrcode != null and qrcode != ''">
+                and qrCode = #{qrcode}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="spec != null and spec != ''">
+                and spec = #{spec}
+            </if>
+            <if test="cellId != null and cellId != ''">
+                and cell_id = #{cellId}
+            </if>
+            <if test="stationId != null and stationId != ''">
+                and station_id = #{stationId}
+            </if>
+            <if test="supplier != null and supplier != ''">
+                and supplier = #{supplier}
+            </if>
+            <if test="manufacturer != null and manufacturer != ''">
+                and manufacturer = #{manufacturer}
+            </if>
+            <if test="factorynumber != null and factorynumber != ''">
+                and factoryNumber = #{factorynumber}
+            </if>
+            <if test="purpose != null and purpose != ''">
+                and purpose = #{purpose}
+            </if>
+            <if test="buydate != null">
+                and buyDate = #{buydate}
+            </if>
+            <if test="person != null and person != ''">
+                and person = #{person}
+            </if>
+            <if test="organization != null and organization != ''">
+                and organization = #{organization}
+            </if>
+            <if test="ip != null and ip != ''">
+                and ip = #{ip}
+            </if>
+            <if test="combaudrate != null and combaudrate != ''">
+                and comBaudrate = #{combaudrate}
+            </if>
+            <if test="comdataseat != null and comdataseat != ''">
+                and comDataseat = #{comdataseat}
+            </if>
+            <if test="combegin != null and combegin != ''">
+                and comBegin = #{combegin}
+            </if>
+            <if test="comend != null and comend != ''">
+                and comEnd = #{comend}
+            </if>
+            <if test="checkmode != null and checkmode != ''">
+                and checkMode = #{checkmode}
+            </if>
+            <if test="sysparam != null and sysparam != ''">
+                and sysParam = #{sysparam}
+            </if>
+            <if test="cpnumber != null and cpnumber != ''">
+                and cPNumber = #{cpnumber}
+            </if>
+            <if test="mode != null and mode != ''">
+                and mode = #{mode}
+            </if>
+            <if test="resolution != null and resolution != ''">
+                and resolution = #{resolution}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and remarks = #{remarks}
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                and del_flag = #{delFlag}
+            </if>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into production_mes2.bas_codeprinter(id, qrCode, type, spec, cell_id, station_id, supplier, manufacturer, factoryNumber, purpose, buyDate, person, organization, ip, comBaudrate, comDataseat, comBegin, comEnd, checkMode, sysParam, cPNumber, mode, resolution, create_by, create_date, update_by, update_date, remarks, del_flag)
+        values (#{id}, #{qrcode}, #{type}, #{spec}, #{cellId}, #{stationId}, #{supplier}, #{manufacturer}, #{factorynumber}, #{purpose}, #{buydate}, #{person}, #{organization}, #{ip}, #{combaudrate}, #{comdataseat}, #{combegin}, #{comend}, #{checkmode}, #{sysparam}, #{cpnumber}, #{mode}, #{resolution}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate}, #{remarks}, #{delFlag})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update production_mes2.bas_codeprinter
+        <set>
+            <if test="qrcode != null and qrcode != ''">
+                qrCode = #{qrcode},
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type},
+            </if>
+            <if test="spec != null and spec != ''">
+                spec = #{spec},
+            </if>
+            <if test="cellId != null and cellId != ''">
+                cell_id = #{cellId},
+            </if>
+            <if test="stationId != null and stationId != ''">
+                station_id = #{stationId},
+            </if>
+            <if test="supplier != null and supplier != ''">
+                supplier = #{supplier},
+            </if>
+            <if test="manufacturer != null and manufacturer != ''">
+                manufacturer = #{manufacturer},
+            </if>
+            <if test="factorynumber != null and factorynumber != ''">
+                factoryNumber = #{factorynumber},
+            </if>
+            <if test="purpose != null and purpose != ''">
+                purpose = #{purpose},
+            </if>
+            <if test="buydate != null">
+                buyDate = #{buydate},
+            </if>
+            <if test="person != null and person != ''">
+                person = #{person},
+            </if>
+            <if test="organization != null and organization != ''">
+                organization = #{organization},
+            </if>
+            <if test="ip != null and ip != ''">
+                ip = #{ip},
+            </if>
+            <if test="combaudrate != null and combaudrate != ''">
+                comBaudrate = #{combaudrate},
+            </if>
+            <if test="comdataseat != null and comdataseat != ''">
+                comDataseat = #{comdataseat},
+            </if>
+            <if test="combegin != null and combegin != ''">
+                comBegin = #{combegin},
+            </if>
+            <if test="comend != null and comend != ''">
+                comEnd = #{comend},
+            </if>
+            <if test="checkmode != null and checkmode != ''">
+                checkMode = #{checkmode},
+            </if>
+            <if test="sysparam != null and sysparam != ''">
+                sysParam = #{sysparam},
+            </if>
+            <if test="cpnumber != null and cpnumber != ''">
+                cPNumber = #{cpnumber},
+            </if>
+            <if test="mode != null and mode != ''">
+                mode = #{mode},
+            </if>
+            <if test="resolution != null and resolution != ''">
+                resolution = #{resolution},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks},
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                del_flag = #{delFlag},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from production_mes2.bas_codeprinter where id = #{id}
+    </delete>
+
+</mapper>

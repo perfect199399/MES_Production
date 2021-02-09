@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>生产管理系统</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
+</head>
+<body th:background="@{/img/1.jpg}">
+<center>
+    <h1>生产管理系统</h1>
+<!--    <h4><p th:text="${user.name}" th:if="${not #strings.isEmpty(user.name)}"></p></h4>-->
+    <br>
+    <a th:href="@{/login.html}" class="button2"><h2>登陆</h2></a>
+    <a th:href="@{/alllog}" class="button2"><h2>查看日志</h2></a>
+    <a th:href="@{/alluser}" class="button2"><h2>查看用户</h2></a>
+    <br>
+    <h2>设备维护管理</h2>
+    <h3>设备台账</h3>
+    <a th:href="@{/equip_fault_report/all}" class="button2"><h4>查询设备台账列表</h4></a>
+    <a th:href="@{/bas.html}" class="button2"><h4>添加删除修改查询设备信息</h4></a>
+
+    <h3>设备保养计划</h3>
+    <a th:href="@{/equipMaintenancePlan/all}" class="button2"><h4>查询保养计划列表</h4></a>
+    <a th:href="@{/equip_maintenance_plan.html}" class="button2"><h4>保养计划添加</h4></a>
+    <a th:href="@{/equip_maintenance_plan.html}" class="button2"><h4>保养计划删除</h4></a>
+    <a th:href="@{/equip_maintenance_plan.html}" class="button2"><h4>保养计划修改</h4></a>
+
+
+    <h3>设备故障上报</h3>
+    <a th:href="@{/equip_repair.html}" class="button2"><h4>设备报修</h4></a>
+
+
+    <h3>设备保修派工记录</h3>
+    <a th:href="@{/equip_repair/all}" class="button2"><h4>查询设备报修列表</h4></a>
+    <a th:href="@{/equip_repair.html}" class="button2"><h4>设备维修派工</h4></a>
+
+
+    <h3>设备维修记录</h3>
+    <a th:href="@{/equip_repair/all}" class="button2"><h4>查询设备维修列表</h4></a>
+    <a th:href="@{/equip_fault_report.html}" class="button2"><h4>开工</h4></a>
+    <a th:href="@{/equip_fault_report.html}" class="button2"><h4>提交维修报告</h4></a>
+</center>
+</body>
+</html>

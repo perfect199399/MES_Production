@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.production_mes.dao.BasLineDao">
+
+    <resultMap type="com.example.production_mes.entity.BasLine" id="BasLineMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="linename" column="lineName" jdbcType="VARCHAR"/>
+        <result property="workshopname" column="shopName" jdbcType="VARCHAR"/>
+        <result property="linenumber" column="lineNumber" jdbcType="VARCHAR"/>
+        <result property="linemaster" column="lineMaster" jdbcType="VARCHAR"/>
+        <result property="linedescription" column="lineDescription" jdbcType="VARCHAR"/>
+        <result property="workshopId" column="workshop_id" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BasLineMap">
+        select
+          id, lineName, lineNumber, lineMaster, lineDescription, workshop_id, create_by, create_date, update_by, update_date, remarks, del_flag
+        from production_mes2.bas_line
+        where id = #{id}
+    </select>
+    <select id="queryByName" resultMap="BasLineMap">
+        select
+              bl.*,bw.shopName
+            from production_mes2.bas_line bl,
+            production_mes2.bas_workshop bw
+        where bl.lineName like "%"#{linename}"%"
+        and  bl.del_flag = '0'
+        and bw.id = bl.workshop_id
+        limit #{i}, #{i1}
+    </select>
+    <!--查询指定行数据-->
+
+        <select id="queryAllByLimit" resultMap="BasLineMap">
+            select
+              bl.*,bw.shopName
+            from production_mes2.bas_line bl,
+            production_mes2.bas_workshop bw
+            where bw.id = bl.workshop_id
+            limit #{offset}, #{limit}
+        </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BasLineMap">
+        select
+        id, lineName, lineNumber, lineMaster, lineDescription, workshop_id, create_by, create_date, update_by,
+        update_date, remarks, del_flag
+        from production_mes2.bas_line
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="linename != null and linename != ''">
+                and lineName = #{linename}
+            </if>
+            <if test="linenumber != null and linenumber != ''">
+                and lineNumber = #{linenumber}
+            </if>
+            <if test="linemaster != null and linemaster != ''">
+                and lineMaster = #{linemaster}
+            </if>
+            <if test="linedescription != null and linedescription != ''">
+                and lineDescription = #{linedescription}
+            </if>
+            <if test="workshopId != null and workshopId != ''">
+                and workshop_id = #{workshopId}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and remarks = #{remarks}
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                and del_flag = #{delFlag}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into production_mes2.bas_line(id,lineName, lineNumber, lineMaster, lineDescription, workshop_id, create_by, create_date, update_by, update_date, remarks, del_flag)
+        values (#{id},#{linename}, #{linenumber}, #{linemaster}, #{linedescription}, #{workshopId}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate}, #{remarks}, #{delFlag})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update production_mes2.bas_line
+        <set>
+            <if test="linename != null and linename != ''">
+                lineName = #{linename},
+            </if>
+            <if test="linenumber != null and linenumber != ''">
+                lineNumber = #{linenumber},
+            </if>
+            <if test="linemaster != null and linemaster != ''">
+                lineMaster = #{linemaster},
+            </if>
+            <if test="linedescription != null and linedescription != ''">
+                lineDescription = #{linedescription},
+            </if>
+            <if test="workshopId != null and workshopId != ''">
+                workshop_id = #{workshopId},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks},
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                del_flag = #{delFlag},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from production_mes2.bas_line where id = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.production_mes.dao.BasWorkshopDao">
+
+    <resultMap type="com.example.production_mes.entity.BasWorkshop" id="BasWorkshopMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="shopname" column="shopName" jdbcType="VARCHAR"/>
+        <result property="shopno" column="shopNo" jdbcType="VARCHAR"/>
+        <result property="master" column="master" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="factoryId" column="factory_id" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BasWorkshopMap">
+        select
+          id, shopName, shopNo, master, description, factory_id, create_by, create_date, update_by, update_date, remarks, del_flag
+        from production_mes2.bas_workshop
+        where id = #{id}
+    </select>
+
+<!--    &lt;!&ndash;查询指定行数据&ndash;&gt;-->
+<!--    <select id="queryAllByLimit" resultMap="BasWorkshopMap">-->
+<!--        select-->
+<!--          id, shopName, shopNo, master, description, factory_id, create_by, create_date, update_by, update_date, remarks, del_flag-->
+<!--        from production_mes2.bas_workshop-->
+<!--        limit #{offset}, #{limit}-->
+<!--    </select>-->
+    <select id="queryAllByLimit" resultMap="BasWorkshopMap">
+        select
+          bw.*,bf.factoryName
+        from production_mes2.bas_factory bf,
+        production_mes2.bas_workshop bw
+        where bw.factory_id = bf.id
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="queryByName" resultMap="BasWorkshopMap">
+        select
+        bw.*,bf.factoryName
+        from production_mes2.bas_factory bf,
+        production_mes2.bas_workshop bw
+         where bw.factory_id = bf.id
+        and bw.shopName like "%"#{shopname}"%"
+        limit #{i}, #{i1}
+    </select>
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BasWorkshopMap">
+        select
+        id, shopName, shopNo, master, description, factory_id, create_by, create_date, update_by, update_date, remarks,
+        del_flag
+        from production_mes2.bas_workshop
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="shopname != null and shopname != ''">
+                and shopName = #{shopname}
+            </if>
+            <if test="shopno != null and shopno != ''">
+                and shopNo = #{shopno}
+            </if>
+            <if test="master != null and master != ''">
+                and master = #{master}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="factoryId != null and factoryId != ''">
+                and factory_id = #{factoryId}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and remarks = #{remarks}
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                and del_flag = #{delFlag}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into production_mes2.bas_workshop(id, shopName, shopNo, master, description, factory_id, create_by, create_date, update_by, update_date, remarks, del_flag)
+        values (#{id},#{shopname}, #{shopno}, #{master}, #{description}, #{factoryId}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate}, #{remarks}, #{delFlag})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update production_mes2.bas_workshop
+        <set>
+            <if test="shopname != null and shopname != ''">
+                shopName = #{shopname},
+            </if>
+            <if test="shopno != null and shopno != ''">
+                shopNo = #{shopno},
+            </if>
+            <if test="master != null and master != ''">
+                master = #{master},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="factoryId != null and factoryId != ''">
+                factory_id = #{factoryId},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks},
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                del_flag = #{delFlag},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from production_mes2.bas_workshop where id = #{id}
+    </delete>
+
+</mapper>

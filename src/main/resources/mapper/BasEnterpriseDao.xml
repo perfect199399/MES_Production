@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.production_mes.dao.BasEnterpriseDao">
+
+    <resultMap type="com.example.production_mes.entity.BasEnterprise" id="BasEnterpriseMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="entername" column="enterName" jdbcType="VARCHAR"/>
+        <result property="entercode" column="enterCode" jdbcType="VARCHAR"/>
+        <result property="enterlevel" column="enterLevel" jdbcType="VARCHAR"/>
+        <result property="enternature" column="enterNature" jdbcType="VARCHAR"/>
+        <result property="entercapital" column="enterCapital" jdbcType="VARCHAR"/>
+        <result property="enterlperson" column="enterLperson" jdbcType="VARCHAR"/>
+        <result property="enterlpcard" column="enterLpCard" jdbcType="VARCHAR"/>
+        <result property="enteraddress" column="enterAddress" jdbcType="VARCHAR"/>
+        <result property="emailcode" column="emailCode" jdbcType="VARCHAR"/>
+        <result property="enterremarks" column="enterRemarks" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BasEnterpriseMap">
+        select
+          id, enterName, enterCode, enterLevel, enterNature, enterCapital, enterLperson, enterLpCard, enterAddress, emailCode, enterRemarks, create_by, create_date, update_by, update_date, remarks, del_flag
+        from production_mes2.bas_enterprise
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BasEnterpriseMap">
+        select
+          id, enterName, enterCode, enterLevel, enterNature, enterCapital, enterLperson, enterLpCard, enterAddress, emailCode, enterRemarks, create_by, create_date, update_by, update_date, remarks, del_flag
+        from production_mes2.bas_enterprise
+        limit #{offset}, #{limit}
+    </select>
+    <select id="queryByName" resultMap="BasEnterpriseMap">
+        select
+          q.*
+        from production_mes2.bas_enterprise q
+        where q.enterName like "%"#{stationname}"%"
+        limit #{i}, #{i1}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BasEnterpriseMap">
+        select
+        id, enterName, enterCode, enterLevel, enterNature, enterCapital, enterLperson, enterLpCard, enterAddress,
+        emailCode, enterRemarks, create_by, create_date, update_by, update_date, remarks, del_flag
+        from production_mes2.bas_enterprise
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="entername != null and entername != ''">
+                and enterName = #{entername}
+            </if>
+            <if test="entercode != null and entercode != ''">
+                and enterCode = #{entercode}
+            </if>
+            <if test="enterlevel != null and enterlevel != ''">
+                and enterLevel = #{enterlevel}
+            </if>
+            <if test="enternature != null and enternature != ''">
+                and enterNature = #{enternature}
+            </if>
+            <if test="entercapital != null and entercapital != ''">
+                and enterCapital = #{entercapital}
+            </if>
+            <if test="enterlperson != null and enterlperson != ''">
+                and enterLperson = #{enterlperson}
+            </if>
+            <if test="enterlpcard != null and enterlpcard != ''">
+                and enterLpCard = #{enterlpcard}
+            </if>
+            <if test="enteraddress != null and enteraddress != ''">
+                and enterAddress = #{enteraddress}
+            </if>
+            <if test="emailcode != null and emailcode != ''">
+                and emailCode = #{emailcode}
+            </if>
+            <if test="enterremarks != null and enterremarks != ''">
+                and enterRemarks = #{enterremarks}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and remarks = #{remarks}
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                and del_flag = #{delFlag}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into production_mes2.bas_enterprise(id,enterName, enterCode, enterLevel, enterNature, enterCapital, enterLperson, enterLpCard, enterAddress, emailCode, enterRemarks, create_by, create_date, update_by, update_date, remarks, del_flag)
+        values (#{id},#{entername}, #{entercode}, #{enterlevel}, #{enternature}, #{entercapital}, #{enterlperson}, #{enterlpcard}, #{enteraddress}, #{emailcode}, #{enterremarks}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate}, #{remarks}, #{delFlag})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update production_mes2.bas_enterprise
+        <set>
+            <if test="entername != null and entername != ''">
+                enterName = #{entername},
+            </if>
+            <if test="entercode != null and entercode != ''">
+                enterCode = #{entercode},
+            </if>
+            <if test="enterlevel != null and enterlevel != ''">
+                enterLevel = #{enterlevel},
+            </if>
+            <if test="enternature != null and enternature != ''">
+                enterNature = #{enternature},
+            </if>
+            <if test="entercapital != null and entercapital != ''">
+                enterCapital = #{entercapital},
+            </if>
+            <if test="enterlperson != null and enterlperson != ''">
+                enterLperson = #{enterlperson},
+            </if>
+            <if test="enterlpcard != null and enterlpcard != ''">
+                enterLpCard = #{enterlpcard},
+            </if>
+            <if test="enteraddress != null and enteraddress != ''">
+                enterAddress = #{enteraddress},
+            </if>
+            <if test="emailcode != null and emailcode != ''">
+                emailCode = #{emailcode},
+            </if>
+            <if test="enterremarks != null and enterremarks != ''">
+                enterRemarks = #{enterremarks},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks},
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                del_flag = #{delFlag},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from production_mes2.bas_enterprise where id = #{id}
+    </delete>
+
+</mapper>

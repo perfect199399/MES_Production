@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.production_mes.dao.BasWorkstationinfosDao">
+
+    <resultMap type="com.example.production_mes.entity.BasWorkstationinfos" id="BasWorkstationinfosMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="stationname" column="stationName" jdbcType="VARCHAR"/>
+        <result property="linename" column="lineName" jdbcType="VARCHAR"/>
+        <result property="stationno" column="stationNo" jdbcType="VARCHAR"/>
+        <result property="stationmaster" column="stationMaster" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+        <result property="lineId" column="line_id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BasWorkstationinfosMap">
+        select
+          id, stationName, stationNo, stationMaster, create_by, create_date, update_by, update_date, remarks, del_flag, line_id
+        from production_mes2.bas_workstationinfos
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BasWorkstationinfosMap">
+            select
+              bws.*,bl.lineName
+            from production_mes2.bas_line bl,
+            production_mes2.bas_workstationinfos bws
+            where bl.id = bws.line_id
+            limit #{offset}, #{limit}
+        </select>
+    <select id="queryByName" resultMap="BasWorkstationinfosMap">
+         select
+              bws.*,bl.lineName
+            from production_mes2.bas_line bl,
+            production_mes2.bas_workstationinfos bws
+            where bl.id = bws.line_id
+        and bws.stationName like "%"#{stationname}"%"
+        limit #{i}, #{i1}
+    </select>
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BasWorkstationinfosMap">
+        select
+        id, stationName, stationNo, stationMaster, create_by, create_date, update_by, update_date, remarks, del_flag,
+        line_id
+        from production_mes2.bas_workstationinfos
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="stationname != null and stationname != ''">
+                and stationName = #{stationname}
+            </if>
+            <if test="stationno != null and stationno != ''">
+                and stationNo = #{stationno}
+            </if>
+            <if test="stationmaster != null and stationmaster != ''">
+                and stationMaster = #{stationmaster}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and remarks = #{remarks}
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                and del_flag = #{delFlag}
+            </if>
+            <if test="lineId != null and lineId != ''">
+                and line_id = #{lineId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into production_mes2.bas_workstationinfos(id,stationName, stationNo, stationMaster, create_by, create_date, update_by, update_date, remarks, del_flag, line_id)
+        values (#{id},#{stationname}, #{stationno}, #{stationmaster}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate}, #{remarks}, #{delFlag}, #{lineId})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update production_mes2.bas_workstationinfos
+        <set>
+            <if test="stationname != null and stationname != ''">
+                stationName = #{stationname},
+            </if>
+            <if test="stationno != null and stationno != ''">
+                stationNo = #{stationno},
+            </if>
+            <if test="stationmaster != null and stationmaster != ''">
+                stationMaster = #{stationmaster},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks},
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                del_flag = #{delFlag},
+            </if>
+            <if test="lineId != null and lineId != ''">
+                line_id = #{lineId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from production_mes2.bas_workstationinfos where id = #{id}
+    </delete>
+
+</mapper>

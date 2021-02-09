@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.production_mes.dao.EquipReportDao">
+
+    <resultMap type="com.example.production_mes.entity.EquipReport" id="EquipReportMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="spec" column="spec" jdbcType="VARCHAR"/>
+        <result property="supplier" column="supplier" jdbcType="VARCHAR"/>
+        <result property="manufacturer" column="manufacturer" jdbcType="VARCHAR"/>
+        <result property="factoryNumber" column="factoryNumber" jdbcType="VARCHAR"/>
+        <result property="purpose" column="purpose" jdbcType="VARCHAR"/>
+        <result property="buyDate" column="buyDate" jdbcType="TIMESTAMP"/>
+        <result property="person" column="person" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+
+    <!--设备台账查询-->
+    <select id="queryAllByLimit" resultMap="EquipReportMap">
+        select
+                  id,
+                  type,
+                  spec,
+                  supplier,
+                  manufacturer,
+                  factoryNumber,
+                  purpose,
+                  buyDate,
+                  person
+                from production_mes2.bas_pad
+        UNION ALL
+        select
+                  id,
+                  type,
+                  spec,
+                  supplier,
+                  manufacturer,
+                  factoryNumber,
+                  purpose,
+                  buyDate,
+                  person
+                from production_mes2.bas_electronsteelyard
+        UNION ALL
+        select
+                  id,
+                  type,
+                  spec,
+                  supplier,
+                  manufacturer,
+                  factoryNumber,
+                  purpose,
+                  buyDate,
+                  person
+                from production_mes2.bas_cardreader
+        UNION ALL
+        select
+                  id,
+                  type,
+                  spec,
+                  supplier,
+                  manufacturer,
+                  factoryNumber,
+                  purpose,
+                  buyDate,
+                  person
+                from production_mes2.bas_codeprinter
+        UNION ALL
+        select
+                  id,
+                  type,
+                  spec,
+                  supplier,
+                  manufacturer,
+                  factoryNumber,
+                  purpose,
+                  buyDate,
+                  person
+                from production_mes2.bas_iphoto
+    </select>
+    <!--设备台账条件查询-->
+    <select id="selectBy" resultMap="EquipReportMap">
+        select
+                  id,
+                  type,
+                  spec,
+                  supplier,
+                  manufacturer,
+                  factoryNumber,
+                  purpose,
+                  buyDate,
+                  person
+                from production_mes2.bas_pad
+                where
+                    id like "%"#{by}"%"
+                    or type like "%"#{by}"%"
+                    or spec like "%"#{by}"%"
+                    or supplier like "%"#{by}"%"
+                    or purpose like "%"#{by}"%"
+                    or person like "%"#{by}"%"
+        UNION ALL
+        select
+                  id,
+                  type,
+                  spec,
+                  supplier,
+                  manufacturer,
+                  factoryNumber,
+                  purpose,
+                  buyDate,
+                  person
+                from production_mes2.bas_electronsteelyard
+                where
+                    id like "%"#{by}"%"
+                    or type like "%"#{by}"%"
+                    or spec like "%"#{by}"%"
+                    or supplier like "%"#{by}"%"
+                    or purpose like "%"#{by}"%"
+                    or person like "%"#{by}"%"
+        UNION ALL
+        select
+                  id,
+                  type,
+                  spec,
+                  supplier,
+                  manufacturer,
+                  factoryNumber,
+                  purpose,
+                  buyDate,
+                  person
+                from production_mes2.bas_cardreader
+                where
+                    id like "%"#{by}"%"
+                    or type like "%"#{by}"%"
+                    or spec like "%"#{by}"%"
+                    or supplier like "%"#{by}"%"
+                    or purpose like "%"#{by}"%"
+                    or person like "%"#{by}"%"
+        UNION ALL
+        select
+                  id,
+                  type,
+                  spec,
+                  supplier,
+                  manufacturer,
+                  factoryNumber,
+                  purpose,
+                  buyDate,
+                  person
+                from production_mes2.bas_codeprinter
+                where
+                    id like "%"#{by}"%"
+                    or type like "%"#{by}"%"
+                    or spec like "%"#{by}"%"
+                    or supplier like "%"#{by}"%"
+                    or purpose like "%"#{by}"%"
+                    or person like "%"#{by}"%"
+        UNION ALL
+        select
+                  id,
+                  type,
+                  spec,
+                  supplier,
+                  manufacturer,
+                  factoryNumber,
+                  purpose,
+                  buyDate,
+                  person
+                from production_mes2.bas_iphoto
+                where
+                    id like "%"#{by}"%"
+                    or type like "%"#{by}"%"
+                    or spec like "%"#{by}"%"
+                    or supplier like "%"#{by}"%"
+                    or purpose like "%"#{by}"%"
+                    or person like "%"#{by}"%"
+    </select>
+
+    <select id="query" resultMap="EquipReportMap">
+
+
+        select
+        id,
+        type,
+        spec,
+        supplier,
+        manufacturer,
+        factoryNumber,
+        purpose,
+        buyDate,
+        person
+        from production_mes2.bas_pad
+        <where>
+        <if test="id != null and id != ''">
+            and id = #{id}
+        </if>
+        <if test="type != null and type != ''">
+            and type = #{type}
+        </if>
+        <if test="spec != null and spec != ''">
+            and spec = #{spec}
+        </if>
+        </where>
+        UNION ALL
+        select
+        id,
+        type,
+        spec,
+        supplier,
+        manufacturer,
+        factoryNumber,
+        purpose,
+        buyDate,
+        person
+        from production_mes2.bas_electronsteelyard
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="spec != null and spec != ''">
+                and spec = #{spec}
+            </if>
+        </where>
+        UNION ALL
+        select
+        id,
+        type,
+        spec,
+        supplier,
+        manufacturer,
+        factoryNumber,
+        purpose,
+        buyDate,
+        person
+        from production_mes2.bas_cardreader
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="spec != null and spec != ''">
+                and spec = #{spec}
+            </if>
+        </where>
+        UNION ALL
+        select
+        id,
+        type,
+        spec,
+        supplier,
+        manufacturer,
+        factoryNumber,
+        purpose,
+        buyDate,
+        person
+        from production_mes2.bas_codeprinter
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="spec != null and spec != ''">
+                and spec = #{spec}
+            </if>
+        </where>
+        UNION ALL
+        select
+        id,
+        type,
+        spec,
+        supplier,
+        manufacturer,
+        factoryNumber,
+        purpose,
+        buyDate,
+        person
+        from production_mes2.bas_iphoto
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="spec != null and spec != ''">
+                and spec = #{spec}
+            </if>
+        </where>
+    </select>
+
+</mapper>

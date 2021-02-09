@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.production_mes.dao.MaterialDao">
+
+    <resultMap type="com.example.production_mes.entity.Material" id="MaterialMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="batchnum" column="batchNum" jdbcType="VARCHAR"/>
+        <result property="mtype" column="mType" jdbcType="VARCHAR"/>
+        <result property="mname" column="mName" jdbcType="VARCHAR"/>
+        <result property="supplierid" column="supplierId" jdbcType="VARCHAR"/>
+        <result property="suppliername" column="supplierName" jdbcType="VARCHAR"/>
+        <result property="purchasedate" column="purchaseDate" jdbcType="OTHER"/>
+        <result property="quantity" column="quantity" jdbcType="OTHER"/>
+        <result property="unit" column="unit" jdbcType="VARCHAR"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="MaterialMap">
+        select
+          id, batchNum, mType, mName, supplierId, supplierName, purchaseDate, quantity, unit, remarks, del_flag, create_by, create_date, update_by, update_date
+        from production_mes2.material
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="MaterialMap">
+        select
+          id, batchNum, mType, mName, supplierId, supplierName, purchaseDate, quantity, unit, remarks, del_flag, create_by, create_date, update_by, update_date
+        from production_mes2.material
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="MaterialMap">
+        select
+        id, batchNum, mType, mName, supplierId, supplierName, purchaseDate, quantity, unit, remarks, del_flag,
+        create_by, create_date, update_by, update_date
+        from production_mes2.material
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="batchnum != null and batchnum != ''">
+                and batchNum = #{batchnum}
+            </if>
+            <if test="mtype != null and mtype != ''">
+                and mType = #{mtype}
+            </if>
+            <if test="mname != null and mname != ''">
+                and mName = #{mname}
+            </if>
+            <if test="supplierid != null and supplierid != ''">
+                and supplierId = #{supplierid}
+            </if>
+            <if test="suppliername != null and suppliername != ''">
+                and supplierName = #{suppliername}
+            </if>
+            <if test="purchasedate != null">
+                and purchaseDate = #{purchasedate}
+            </if>
+            <if test="quantity != null">
+                and quantity = #{quantity}
+            </if>
+            <if test="unit != null and unit != ''">
+                and unit = #{unit}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and remarks = #{remarks}
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                and del_flag = #{delFlag}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into production_mes2.material(batchNum, mType, mName, supplierId, supplierName, purchaseDate, quantity, unit, remarks, del_flag, create_by, create_date, update_by, update_date)
+        values (#{batchnum}, #{mtype}, #{mname}, #{supplierid}, #{suppliername}, #{purchasedate}, #{quantity}, #{unit}, #{remarks}, #{delFlag}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update production_mes2.material
+        <set>
+            <if test="batchnum != null and batchnum != ''">
+                batchNum = #{batchnum},
+            </if>
+            <if test="mtype != null and mtype != ''">
+                mType = #{mtype},
+            </if>
+            <if test="mname != null and mname != ''">
+                mName = #{mname},
+            </if>
+            <if test="supplierid != null and supplierid != ''">
+                supplierId = #{supplierid},
+            </if>
+            <if test="suppliername != null and suppliername != ''">
+                supplierName = #{suppliername},
+            </if>
+            <if test="purchasedate != null">
+                purchaseDate = #{purchasedate},
+            </if>
+            <if test="quantity != null">
+                quantity = #{quantity},
+            </if>
+            <if test="unit != null and unit != ''">
+                unit = #{unit},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks},
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                del_flag = #{delFlag},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from production_mes2.material where id = #{id}
+    </delete>
+
+
+
+
+</mapper>

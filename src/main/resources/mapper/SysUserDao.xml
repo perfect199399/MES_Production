@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.production_mes.dao.SysUserDao">
+
+    <resultMap type="com.example.production_mes.entity.SysUser" id="SysUserMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="officeId" column="office_id" jdbcType="VARCHAR"/>
+        <result property="loginName" column="login_name" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="no" column="no" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="mobile" column="mobile" jdbcType="VARCHAR"/>
+        <result property="userType" column="user_type" jdbcType="VARCHAR"/>
+        <result property="photo" column="photo" jdbcType="VARCHAR"/>
+        <result property="loginIp" column="login_ip" jdbcType="VARCHAR"/>
+        <result property="loginDate" column="login_date" jdbcType="TIMESTAMP"/>
+        <result property="loginFlag" column="login_flag" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--登陆-->
+    <select id="login" resultMap="SysUserMap">
+        select * from production_mes2.sys_user where login_name = #{login_name} and password = #{password}
+    </select>
+
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SysUserMap">
+        select
+          id, company_id, office_id, login_name, password, no, name, email, phone, mobile, user_type, photo, login_ip, login_date, login_flag, create_by, create_date, update_by, update_date, remarks, del_flag
+        from production_mes2.sys_user
+        where id = #{id}
+    </select>
+
+
+    <!--查询单个-->
+    <select id="queryByLoginName" resultMap="SysUserMap">
+        select
+          id, company_id, office_id, login_name, password, no, name, email, phone, mobile, user_type, photo, login_ip, login_date, login_flag, create_by, create_date, update_by, update_date, remarks, del_flag
+        from production_mes2.sys_user
+        where login_name = #{login_name}
+    </select>
+
+
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SysUserMap">
+        select
+          id, company_id, office_id, login_name, password, no, name, email, phone, mobile, user_type, photo, login_ip, login_date, login_flag, create_by, create_date, update_by, update_date, remarks, del_flag
+        from production_mes2.sys_user
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SysUserMap">
+        select
+        id, company_id, office_id, login_name, password, no, name, email, phone, mobile, user_type, photo, login_ip,
+        login_date, login_flag, create_by, create_date, update_by, update_date, remarks, del_flag
+        from production_mes2.sys_user
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="companyId != null and companyId != ''">
+                and company_id = #{companyId}
+            </if>
+            <if test="officeId != null and officeId != ''">
+                and office_id = #{officeId}
+            </if>
+            <if test="loginName != null and loginName != ''">
+                and login_name = #{loginName}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="no != null and no != ''">
+                and no = #{no}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                and mobile = #{mobile}
+            </if>
+            <if test="userType != null and userType != ''">
+                and user_type = #{userType}
+            </if>
+            <if test="photo != null and photo != ''">
+                and photo = #{photo}
+            </if>
+            <if test="loginIp != null and loginIp != ''">
+                and login_ip = #{loginIp}
+            </if>
+            <if test="loginDate != null">
+                and login_date = #{loginDate}
+            </if>
+            <if test="loginFlag != null and loginFlag != ''">
+                and login_flag = #{loginFlag}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and remarks = #{remarks}
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                and del_flag = #{delFlag}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into production_mes2.sys_user(company_id, office_id, login_name, password, no, name, email, phone, mobile, user_type, photo, login_ip, login_date, login_flag, create_by, create_date, update_by, update_date, remarks, del_flag)
+        values (#{companyId}, #{officeId}, #{loginName}, #{password}, #{no}, #{name}, #{email}, #{phone}, #{mobile}, #{userType}, #{photo}, #{loginIp}, #{loginDate}, #{loginFlag}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate}, #{remarks}, #{delFlag})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update production_mes2.sys_user
+        <set>
+            <if test="companyId != null and companyId != ''">
+                company_id = #{companyId},
+            </if>
+            <if test="officeId != null and officeId != ''">
+                office_id = #{officeId},
+            </if>
+            <if test="loginName != null and loginName != ''">
+                login_name = #{loginName},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="no != null and no != ''">
+                no = #{no},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="mobile != null and mobile != ''">
+                mobile = #{mobile},
+            </if>
+            <if test="userType != null and userType != ''">
+                user_type = #{userType},
+            </if>
+            <if test="photo != null and photo != ''">
+                photo = #{photo},
+            </if>
+            <if test="loginIp != null and loginIp != ''">
+                login_ip = #{loginIp},
+            </if>
+            <if test="loginDate != null">
+                login_date = #{loginDate},
+            </if>
+            <if test="loginFlag != null and loginFlag != ''">
+                login_flag = #{loginFlag},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks},
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                del_flag = #{delFlag},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from production_mes2.sys_user where id = #{id}
+    </delete>
+
+
+
+
+
+</mapper>

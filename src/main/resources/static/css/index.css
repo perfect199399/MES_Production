@@ -1,0 +1,11 @@
+/*链接按钮*/
+
+.button2 {
+    background: gold;
+    border: 1px solid greenyellow;
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px 22px;
+    border-radius: 20px;
+    /*cursor: pointer;靠近按钮的一只手*/
+}

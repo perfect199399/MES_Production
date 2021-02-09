@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>保养计划</title>
+</head>
+<body>
+<center>
+    <h1>保养计划添加</h1>
+    <form th:action="@{/equipMaintenancePlan/add}" method="post">
+        <input type="text" name="equip_type" placeholder="请输入设备类型"><br>
+        <input type="text" name="maintenance" placeholder="请输入保养内容"><br>
+        <input type="text" name="cycle" placeholder="请输入保养周期：周，月，年"><br>
+        <input type="text" name="warn_time" placeholder="请输入预警时间"><br>
+        <input type="text" name="user_name" placeholder="请输入保养人姓名"><br>
+        <input type="text" name="user_id" placeholder="请输入保养人"><br>
+        <input type="text" name="del_flag" placeholder="请输入删除标记" maxlength="1"><br>
+        <input type="text" name="remarks" placeholder="请输入备注"><br>
+        <input type="text" name="create_by" placeholder="请输入创建人"><br>
+        <input type="text" name="update_by" placeholder="请输入更新人"><br>
+<!--        <input type="text" name="create_date" placeholder="请输入创建时间"><br>-->
+<!--        <input type="text" name="update_date" placeholder="请输入更新时间"><br>-->
+        <button type="submit">添&emsp;加</button>
+    </form>
+    <h1>保养计划删除</h1>
+    <h1>保养计划修改</h1>
+
+</center>
+
+</body>
+</html>

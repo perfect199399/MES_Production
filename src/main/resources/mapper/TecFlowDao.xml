@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.production_mes.dao.TecFlowDao">
+
+    <resultMap type="com.example.production_mes.entity.TecFlow" id="TecFlowMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="flowcode" column="flowCode" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="VARCHAR"/>
+        <result property="flowname" column="flowName" jdbcType="VARCHAR"/>
+        <result property="flowdesc" column="flowDesc" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TecFlowMap">
+        select
+          id, flowCode, version, flowName, flowDesc, create_by, create_date, update_by, update_date, remarks, del_flag
+        from production_mes2.tec_flow
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TecFlowMap">
+        select
+          id, flowCode, version, flowName, flowDesc, create_by, create_date, update_by, update_date, remarks, del_flag
+        from production_mes2.tec_flow
+        where del_flag='1'
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--条件查询-->
+    <select id="select" resultMap="TecFlowMap">
+        select
+          id, flowCode, version, flowName, flowDesc, create_by, create_date, update_by, update_date, remarks, del_flag
+        from production_mes2.tec_flow
+        where flowCode like "%"#{flowcode}"%"
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TecFlowMap">
+        select
+        id, flowCode, version, flowName, flowDesc, create_by, create_date, update_by, update_date, remarks, del_flag
+        from production_mes2.tec_flow
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="flowcode != null and flowcode != ''">
+                and flowCode = #{flowcode}
+            </if>
+            <if test="version != null and version != ''">
+                and version = #{version}
+            </if>
+            <if test="flowname != null and flowname != ''">
+                and flowName = #{flowname}
+            </if>
+            <if test="flowdesc != null and flowdesc != ''">
+                and flowDesc = #{flowdesc}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and remarks = #{remarks}
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                and del_flag = #{delFlag}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into production_mes2.tec_flow(flowCode, version, flowName, flowDesc, create_by, create_date, update_by, update_date, remarks, del_flag)
+        values (#{flowcode}, #{version}, #{flowname}, #{flowdesc}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate}, #{remarks}, #{delFlag})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update production_mes2.tec_flow
+        <set>
+            <if test="flowcode != null and flowcode != ''">
+                flowCode = #{flowcode},
+            </if>
+            <if test="version != null and version != ''">
+                version = #{version},
+            </if>
+            <if test="flowname != null and flowname != ''">
+                flowName = #{flowname},
+            </if>
+            <if test="flowdesc != null and flowdesc != ''">
+                flowDesc = #{flowdesc},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks},
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                del_flag = #{delFlag},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from production_mes2.tec_flow where id = #{id}
+    </delete>
+
+    <!--通过主键修改-->
+    <update id="updateById">
+        update production_mes2.tec_flow
+        <set>
+            <if test="id != null and id != ''">
+                del_flag = '0',
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+</mapper>

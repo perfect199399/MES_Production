@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.production_mes.dao.BasWorkorderDao">
+
+    <resultMap type="com.example.production_mes.entity.BasWorkorder" id="BasWorkorderMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="orderId" column="order_id" jdbcType="VARCHAR"/>
+        <result property="linename" column="lineName" jdbcType="VARCHAR"/>
+        <result property="productname" column="productName" jdbcType="VARCHAR"/>
+        <result property="ordercode" column="orderCode" jdbcType="VARCHAR"/>
+        <result property="unitname" column="unitName" jdbcType="VARCHAR"/>
+        <result property="ordertype" column="orderType" jdbcType="VARCHAR"/>
+        <result property="amount" column="amount" jdbcType="INTEGER"/>
+        <result property="eststarttime" column="estStartTime" jdbcType="TIMESTAMP"/>
+        <result property="estendtime" column="estEndTime" jdbcType="TIMESTAMP"/>
+        <result property="actstarttime" column="actStartTime" jdbcType="TIMESTAMP"/>
+        <result property="inamount" column="inAmount" jdbcType="INTEGER"/>
+        <result property="outamount" column="outAmount" jdbcType="INTEGER"/>
+        <result property="scrapamount" column="scrapAmount" jdbcType="INTEGER"/>
+        <result property="state" column="state" jdbcType="VARCHAR"/>
+        <result property="lineId" column="line_id" jdbcType="VARCHAR"/>
+        <result property="productId" column="product_id" jdbcType="VARCHAR"/>
+        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BasWorkorderMap">
+        select
+          id, order_id, orderCode, unitName, orderType, amount, estStartTime, estEndTime, actStartTime, inAmount, outAmount, scrapAmount, state, line_id, product_id, del_flag, remarks, create_by, create_date, update_by, update_date
+        from production_mes2.bas_workorder
+        where id = #{id}
+    </select>
+    <select id="queryByName" resultMap="BasWorkorderMap">
+        select  bwo.*,bl.lineName,bp.productName
+            from production_mes2.bas_line bl,
+            production_mes2.bas_workorder bwo,
+            production_mes2.bas_product bp
+            where bl.lineNumber = bwo.line_id
+            and bwo.product_id =  bp.qrCode
+            and bwo.orderCode like "%"#{ordercode}"%"
+        limit #{i}, #{i1}
+    </select>
+    <!--查询指定行数据-->
+<!--    <select id="queryAllByLimit" resultMap="BasWorkorderMap">-->
+<!--        select-->
+<!--          id, order_id, orderCode, unitName, orderType, amount, estStartTime, estEndTime, actStartTime, inAmount, outAmount, scrapAmount, state, line_id, product_id, del_flag, remarks, create_by, create_date, update_by, update_date-->
+<!--        from production_mes2.bas_workorder-->
+<!--        limit #{offset}, #{limit}-->
+<!--    </select>-->
+    <select id="queryAllByLimit" resultMap="BasWorkorderMap">
+            select  bwo.*,bl.lineName,bp.productName
+            from production_mes2.bas_line bl,
+            production_mes2.bas_workorder bwo,
+            production_mes2.bas_product bp
+            where bl.lineNumber = bwo.line_id
+            and bwo.product_id =  bp.qrCode
+            limit #{offset}, #{limit}
+        </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BasWorkorderMap">
+        select
+        id, order_id, orderCode, unitName, orderType, amount, estStartTime, estEndTime, actStartTime, inAmount,
+        outAmount, scrapAmount, state, line_id, product_id, del_flag, remarks, create_by, create_date, update_by,
+        update_date
+        from production_mes2.bas_workorder
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="orderId != null and orderId != ''">
+                and order_id = #{orderId}
+            </if>
+            <if test="ordercode != null and ordercode != ''">
+                and orderCode = #{ordercode}
+            </if>
+            <if test="unitname != null and unitname != ''">
+                and unitName = #{unitname}
+            </if>
+            <if test="ordertype != null and ordertype != ''">
+                and orderType = #{ordertype}
+            </if>
+            <if test="amount != null">
+                and amount = #{amount}
+            </if>
+            <if test="eststarttime != null">
+                and estStartTime = #{eststarttime}
+            </if>
+            <if test="estendtime != null">
+                and estEndTime = #{estendtime}
+            </if>
+            <if test="actstarttime != null">
+                and actStartTime = #{actstarttime}
+            </if>
+            <if test="inamount != null">
+                and inAmount = #{inamount}
+            </if>
+            <if test="outamount != null">
+                and outAmount = #{outamount}
+            </if>
+            <if test="scrapamount != null">
+                and scrapAmount = #{scrapamount}
+            </if>
+            <if test="state != null and state != ''">
+                and state = #{state}
+            </if>
+            <if test="lineId != null and lineId != ''">
+                and line_id = #{lineId}
+            </if>
+            <if test="productId != null and productId != ''">
+                and product_id = #{productId}
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                and del_flag = #{delFlag}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and remarks = #{remarks}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into production_mes2.bas_workorder(id,order_id, orderCode, unitName, orderType, amount, estStartTime, estEndTime, actStartTime, inAmount, outAmount, scrapAmount, state, line_id, product_id, del_flag, remarks, create_by, create_date, update_by, update_date)
+        values (#{id},#{orderId}, #{ordercode}, #{unitname}, #{ordertype}, #{amount}, #{eststarttime}, #{estendtime}, #{actstarttime}, #{inamount}, #{outamount}, #{scrapamount}, #{state}, #{lineId}, #{productId}, #{delFlag}, #{remarks}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update production_mes2.bas_workorder
+        <set>
+            <if test="orderId != null and orderId != ''">
+                order_id = #{orderId},
+            </if>
+            <if test="ordercode != null and ordercode != ''">
+                orderCode = #{ordercode},
+            </if>
+            <if test="unitname != null and unitname != ''">
+                unitName = #{unitname},
+            </if>
+            <if test="ordertype != null and ordertype != ''">
+                orderType = #{ordertype},
+            </if>
+            <if test="amount != null">
+                amount = #{amount},
+            </if>
+            <if test="eststarttime != null">
+                estStartTime = #{eststarttime},
+            </if>
+            <if test="estendtime != null">
+                estEndTime = #{estendtime},
+            </if>
+            <if test="actstarttime != null">
+                actStartTime = #{actstarttime},
+            </if>
+            <if test="inamount != null">
+                inAmount = #{inamount},
+            </if>
+            <if test="outamount != null">
+                outAmount = #{outamount},
+            </if>
+            <if test="scrapamount != null">
+                scrapAmount = #{scrapamount},
+            </if>
+            <if test="state != null and state != ''">
+                state = #{state},
+            </if>
+            <if test="lineId != null and lineId != ''">
+                line_id = #{lineId},
+            </if>
+            <if test="productId != null and productId != ''">
+                product_id = #{productId},
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                del_flag = #{delFlag},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from production_mes2.bas_workorder where id = #{id}
+    </delete>
+
+</mapper>

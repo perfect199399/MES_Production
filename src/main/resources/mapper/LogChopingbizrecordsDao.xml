@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.production_mes.dao.LogChopingbizrecordsDao">
+
+    <resultMap type="com.example.production_mes.entity.LogChopingbizrecords" id="LogChopingbizrecordsMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="cardid" column="cardId" jdbcType="VARCHAR"/>
+        <result property="employeeid" column="employeeId" jdbcType="VARCHAR"/>
+        <result property="employeename" column="employeeName" jdbcType="VARCHAR"/>
+        <result property="workcellid" column="workCellId" jdbcType="VARCHAR"/>
+        <result property="workcellname" column="workCellName" jdbcType="VARCHAR"/>
+        <result property="equipid" column="equipId" jdbcType="VARCHAR"/>
+        <result property="equipname" column="equipName" jdbcType="VARCHAR"/>
+        <result property="qrcode" column="qrCode" jdbcType="VARCHAR"/>
+        <result property="counter" column="counter" jdbcType="INTEGER"/>
+        <result property="unit" column="unit" jdbcType="VARCHAR"/>
+        <result property="pieces" column="pieces" jdbcType="INTEGER"/>
+        <result property="time" column="time" jdbcType="TIMESTAMP"/>
+        <result property="creatorid" column="creatorId" jdbcType="VARCHAR"/>
+        <result property="createdate" column="createDate" jdbcType="TIMESTAMP"/>
+        <result property="modifer" column="modifer" jdbcType="VARCHAR"/>
+        <result property="modifieddate" column="modifiedDate" jdbcType="TIMESTAMP"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="LogChopingbizrecordsMap">
+        select
+          id, cardId, employeeId, employeeName, workCellId, workCellName, equipId, equipName, qrCode, counter, unit, pieces, time, creatorId, createDate, modifer, modifiedDate, remarks
+        from production_mes2.log_chopingbizrecords
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="LogChopingbizrecordsMap">
+        select
+          id, cardId, employeeId, employeeName, workCellId, workCellName, equipId, equipName, qrCode, counter, unit, pieces, time, creatorId, createDate, modifer, modifiedDate, remarks
+        from production_mes2.log_chopingbizrecords
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="LogChopingbizrecordsMap">
+        select
+        id, cardId, employeeId, employeeName, workCellId, workCellName, equipId, equipName, qrCode, counter, unit,
+        pieces, time, creatorId, createDate, modifer, modifiedDate, remarks
+        from production_mes2.log_chopingbizrecords
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="cardid != null and cardid != ''">
+                and cardId = #{cardid}
+            </if>
+            <if test="employeeid != null and employeeid != ''">
+                and employeeId = #{employeeid}
+            </if>
+            <if test="employeename != null and employeename != ''">
+                and employeeName = #{employeename}
+            </if>
+            <if test="workcellid != null and workcellid != ''">
+                and workCellId = #{workcellid}
+            </if>
+            <if test="workcellname != null and workcellname != ''">
+                and workCellName = #{workcellname}
+            </if>
+            <if test="equipid != null and equipid != ''">
+                and equipId = #{equipid}
+            </if>
+            <if test="equipname != null and equipname != ''">
+                and equipName = #{equipname}
+            </if>
+            <if test="qrcode != null and qrcode != ''">
+                and qrCode = #{qrcode}
+            </if>
+            <if test="counter != null">
+                and counter = #{counter}
+            </if>
+            <if test="unit != null and unit != ''">
+                and unit = #{unit}
+            </if>
+            <if test="pieces != null">
+                and pieces = #{pieces}
+            </if>
+            <if test="time != null">
+                and time = #{time}
+            </if>
+            <if test="creatorid != null and creatorid != ''">
+                and creatorId = #{creatorid}
+            </if>
+            <if test="createdate != null">
+                and createDate = #{createdate}
+            </if>
+            <if test="modifer != null and modifer != ''">
+                and modifer = #{modifer}
+            </if>
+            <if test="modifieddate != null">
+                and modifiedDate = #{modifieddate}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and remarks = #{remarks}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into production_mes2.log_chopingbizrecords(cardId, employeeId, employeeName, workCellId, workCellName, equipId, equipName, qrCode, counter, unit, pieces, time, creatorId, createDate, modifer, modifiedDate, remarks)
+        values (#{cardid}, #{employeeid}, #{employeename}, #{workcellid}, #{workcellname}, #{equipid}, #{equipname}, #{qrcode}, #{counter}, #{unit}, #{pieces}, #{time}, #{creatorid}, #{createdate}, #{modifer}, #{modifieddate}, #{remarks})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update production_mes2.log_chopingbizrecords
+        <set>
+            <if test="cardid != null and cardid != ''">
+                cardId = #{cardid},
+            </if>
+            <if test="employeeid != null and employeeid != ''">
+                employeeId = #{employeeid},
+            </if>
+            <if test="employeename != null and employeename != ''">
+                employeeName = #{employeename},
+            </if>
+            <if test="workcellid != null and workcellid != ''">
+                workCellId = #{workcellid},
+            </if>
+            <if test="workcellname != null and workcellname != ''">
+                workCellName = #{workcellname},
+            </if>
+            <if test="equipid != null and equipid != ''">
+                equipId = #{equipid},
+            </if>
+            <if test="equipname != null and equipname != ''">
+                equipName = #{equipname},
+            </if>
+            <if test="qrcode != null and qrcode != ''">
+                qrCode = #{qrcode},
+            </if>
+            <if test="counter != null">
+                counter = #{counter},
+            </if>
+            <if test="unit != null and unit != ''">
+                unit = #{unit},
+            </if>
+            <if test="pieces != null">
+                pieces = #{pieces},
+            </if>
+            <if test="time != null">
+                time = #{time},
+            </if>
+            <if test="creatorid != null and creatorid != ''">
+                creatorId = #{creatorid},
+            </if>
+            <if test="createdate != null">
+                createDate = #{createdate},
+            </if>
+            <if test="modifer != null and modifer != ''">
+                modifer = #{modifer},
+            </if>
+            <if test="modifieddate != null">
+                modifiedDate = #{modifieddate},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from production_mes2.log_chopingbizrecords where id = #{id}
+    </delete>
+
+
+    <select id="search" resultMap="LogChopingbizrecordsMap">
+        select
+          id, cardId, employeeId, employeeName, workCellId, workCellName, equipId, equipName, qrCode, counter, unit, pieces, time, creatorId, createDate, modifer, modifiedDate, remarks
+        from production_mes2.log_chopingbizrecords
+        where employeeName = #{desc}
+    </select>
+
+</mapper>

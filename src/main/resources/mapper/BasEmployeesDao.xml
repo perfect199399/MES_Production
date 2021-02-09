@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.production_mes.dao.BasEmployeesDao">
+
+    <resultMap type="com.example.production_mes.entity.BasEmployees" id="BasEmployeesMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="employeeno" column="employeeNo" jdbcType="VARCHAR"/>
+        <result property="employeename" column="employeeName" jdbcType="VARCHAR"/>
+        <result property="workdate" column="workDate" jdbcType="OTHER"/>
+        <result property="sex" column="sex" jdbcType="VARCHAR"/>
+        <result property="age" column="age" jdbcType="INTEGER"/>
+        <result property="telnum" column="telNUm" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="idcard" column="idCard" jdbcType="VARCHAR"/>
+        <result property="officeid" column="officeId" jdbcType="VARCHAR"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+        <result property="officename" column="name" jdbcType="VARCHAR"/>
+
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BasEmployeesMap">
+        select
+          id, employeeNo, employeeName, workDate, sex, age, telNUm, address, email, idCard, officeId, remarks, del_flag, create_by, create_date, update_by, update_date
+        from production_mes2.bas_employees
+        where id = #{id}
+    </select>
+    <select id="queryByName" resultMap="BasEmployeesMap">
+        select
+          be.*,bo.name
+        from production_mes2.sys_office bo,
+        production_mes2.bas_employees be
+        where be.officeId = bo.id
+        and be.employeeName like "%"#{employeename}"%"
+        limit #{i}, #{i1}
+    </select>
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BasEmployeesMap">
+        select
+          be.*,bo.name
+        from production_mes2.sys_office bo,
+        production_mes2.bas_employees be
+        where be.officeId = bo.id
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BasEmployeesMap">
+        select
+        id, employeeNo, employeeName, workDate, sex, age, telNUm, address, email, idCard, officeId, remarks, del_flag,
+        create_by, create_date, update_by, update_date
+        from production_mes2.bas_employees
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="employeeno != null and employeeno != ''">
+                and employeeNo = #{employeeno}
+            </if>
+            <if test="employeename != null and employeename != ''">
+                and employeeName = #{employeename}
+            </if>
+            <if test="workdate != null">
+                and workDate = #{workdate}
+            </if>
+            <if test="sex != null and sex != ''">
+                and sex = #{sex}
+            </if>
+            <if test="age != null">
+                and age = #{age}
+            </if>
+            <if test="telnum != null and telnum != ''">
+                and telNUm = #{telnum}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="idcard != null and idcard != ''">
+                and idCard = #{idcard}
+            </if>
+            <if test="officeid != null and officeid != ''">
+                and officeId = #{officeid}
+            </if>
+            <if test="remarks != null and remarks != ''">
+                and remarks = #{remarks}
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                and del_flag = #{delFlag}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into production_mes2.bas_employees(id, employeeNo, employeeName, workDate, sex, age, telNUm, address, email, idCard, officeId, remarks, del_flag, create_by, create_date, update_by, update_date)
+        values (#{id},#{employeeno}, #{employeename}, #{workdate}, #{sex}, #{age}, #{telnum}, #{address}, #{email}, #{idcard}, #{officeid}, #{remarks}, #{delFlag}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update production_mes2.bas_employees
+        <set>
+            <if test="employeeno != null and employeeno != ''">
+                employeeNo = #{employeeno},
+            </if>
+            <if test="employeename != null and employeename != ''">
+                employeeName = #{employeename},
+            </if>
+            <if test="workdate != null">
+                workDate = #{workdate},
+            </if>
+            <if test="sex != null and sex != ''">
+                sex = #{sex},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="telnum != null and telnum != ''">
+                telNUm = #{telnum},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="idcard != null and idcard != ''">
+                idCard = #{idcard},
+            </if>
+            <if test="officeid != null and officeid != ''">
+                officeId = #{officeid},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks},
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                del_flag = #{delFlag},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from production_mes2.bas_employees where id = #{id}
+    </delete>
+
+</mapper>

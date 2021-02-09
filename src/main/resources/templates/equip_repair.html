@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>报修</title>
+</head>
+<body>
+<center>
+    <h1>查询报修列表</h1>
+
+    <h1>故障报修</h1>
+    <form th:action="@{/equip_repair/add}" method="post">
+        <input type="text" name="mid" placeholder="维修记录Id"><br>
+        <input type="text" name="fault_type" placeholder="故障类型"><br>
+        <input type="text" name="fault_reason" placeholder="故障原因"><br>
+        <input type="text" name="fault_desc" placeholder="故障描述"><br>
+        <input type="text" name="fault_imgs" placeholder="故障图片"><br>
+        <input type="text" name="del_flag" placeholder="删除标记"><br>
+        <input type="text" name="remarks" placeholder="备注"><br>
+        <input type="text" name="create_by" placeholder="创建人"><br>
+        <input type="text" name="update_by" placeholder="更新人"><br>
+<!--        <input type="text" name="update_date" placeholder="更新时间"><br>-->
+<!--        <input type="text" name="create_date" placeholder="创建时间"><br>-->
+        <button type="submit">添&emsp;加</button>
+    </form>
+    <h1>保修单派工</h1>
+
+</center>
+
+</body>
+</html>
